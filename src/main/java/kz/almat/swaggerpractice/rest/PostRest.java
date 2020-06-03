@@ -3,9 +3,7 @@ package kz.almat.swaggerpractice.rest;
 import kz.almat.swaggerpractice.model.Post;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * @author Almat on 03.06.2020
@@ -15,7 +13,7 @@ import java.util.Optional;
 @RequestMapping("/")
 public class PostRest {
 
-    private List<Post> posts = new ArrayList<>();
+    private Set<Post> posts = new HashSet<>();
 
     public PostRest(){
         posts.add(new Post(1, "aaa"));
@@ -24,13 +22,13 @@ public class PostRest {
     }
 
     @GetMapping
-    public List<Post> all() {
+    public Set<Post> all() {
         return posts;
     }
 
     @GetMapping("{id}")
     public Optional<Post> getById(@PathVariable Integer id) {
-        return posts.stream().filter(post -> post.getId() == id).findFirst();
+        return posts.stream().filter(post -> post.getId().equals(id)).findFirst();
     }
 
     @PostMapping
@@ -42,14 +40,14 @@ public class PostRest {
     public void update(@PathVariable Integer id,
                        @RequestBody Post post) {
         posts.stream()
-                .filter(post1 -> post1.getId() == id).findFirst()
+                .filter(post1 -> post1.getId().equals(id)).findFirst()
                     .ifPresent(post1 -> post1.setText(post.getText()));
     }
 
     @DeleteMapping("{id}")
     public void delete(@PathVariable Integer id) {
         posts.stream()
-                .filter(post -> post.getId() == id).findFirst()
+                .filter(post -> post.getId().equals(id)).findFirst()
                 .ifPresent(post -> posts.remove(post));
     }
 
