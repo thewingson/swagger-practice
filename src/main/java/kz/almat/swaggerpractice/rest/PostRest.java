@@ -1,5 +1,7 @@
 package kz.almat.swaggerpractice.rest;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import kz.almat.swaggerpractice.model.Post;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +29,10 @@ public class PostRest {
     }
 
     @GetMapping("{id}")
-    public Post getById(@PathVariable Integer id) {
+    @ApiOperation(value = "Finds Post by ID",
+                    notes = "Provide an ID",
+                    response = Post.class)
+    public Post getById(@ApiParam(value = "ID value of Post", required = true) @PathVariable Integer id) {
         Optional<Post> first = posts.stream().filter(post -> post.getId().equals(id)).findFirst();
         if(first.isPresent()){
             return first.get();
