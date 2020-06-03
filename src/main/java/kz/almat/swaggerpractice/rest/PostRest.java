@@ -27,8 +27,13 @@ public class PostRest {
     }
 
     @GetMapping("{id}")
-    public Optional<Post> getById(@PathVariable Integer id) {
-        return posts.stream().filter(post -> post.getId().equals(id)).findFirst();
+    public Post getById(@PathVariable Integer id) {
+        Optional<Post> first = posts.stream().filter(post -> post.getId().equals(id)).findFirst();
+        if(first.isPresent()){
+            return first.get();
+        }else {
+            throw new RuntimeException("Post not found!");
+        }
     }
 
     @PostMapping
