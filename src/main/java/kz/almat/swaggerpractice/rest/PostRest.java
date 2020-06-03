@@ -10,7 +10,7 @@ import java.util.*;
  */
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/api")
 public class PostRest {
 
     private Set<Post> posts = new HashSet<>();
